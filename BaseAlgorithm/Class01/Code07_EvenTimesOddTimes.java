@@ -15,8 +15,13 @@ public class Code07_EvenTimesOddTimes {
 		for (int curNum : arr) {
 			eO ^= curNum;
 		}
+		// eO = a^b
+		// eO != 0
+		// eO必然有一个位置上是1
+		// 怎么取一个二进制数，最右边的1？ 取反+1，再与原二进制求与（手动试试就知道）
 		int rightOne = eO & (~eO + 1);
 		for (int cur : arr) {
+			// 取!= 或 == 都可以，因为每次只找一边
 			if ((cur & rightOne) != 0) {
 				eOhasOne ^= cur;
 			}
