@@ -10,10 +10,10 @@ public class Code03_HeapSort {
 		}
 		for (int i = 0; i < arr.length; i++) {
 			heapInsert(arr, i);
-		}
+		} 
 		int size = arr.length;
 		swap(arr, 0, --size);
-		while (size > 0) {
+		while (size > 0) { 
 			heapify(arr, 0, size);
 			swap(arr, 0, --size);
 		}
@@ -27,14 +27,18 @@ public class Code03_HeapSort {
 	}
 
 	public static void heapify(int[] arr, int index, int size) {
-		int left = index * 2 + 1;
-		while (left < size) {
+		int left = index * 2 + 1; // 左孩子的下标
+		while (left < size) {// 左孩子不越界的时候
+			// 两个孩子中，谁的值大，把下标给largest
 			int largest = left + 1 < size && arr[left + 1] > arr[left] ? left + 1 : left;
+			// 父与孩子之间，谁的值大，把下标给largest
 			largest = arr[largest] > arr[index] ? largest : index;
+			// 父节点的值不需要交换
 			if (largest == index) {
 				break;
 			}
 			swap(arr, largest, index);
+			// 本次交换完。当前值 和其他儿子孙子可能不是大根对
 			index = largest;
 			left = index * 2 + 1;
 		}
