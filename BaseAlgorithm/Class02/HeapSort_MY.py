@@ -6,17 +6,13 @@ Created on Sat Apr  6 10:12:22 2019
 堆排序
 1. 数组变成大根堆。每个新插入的数，和它的父节点，对比交换。再循环对比。
 2. 大根堆进行排序，将头位置的大数，与尾部数据交换。循环。
-
 """
-
-
 def heapSort(arr):
     if arr is None or len(arr) < 2:
         return arr
     # 第一步形成大顶堆
     for i in range(len(arr)):
         heapInsert(arr,i)
-    
     # 第二步 1） 交换头位置和尾位置的值。2) 交换后，再次将数组变成大顶堆。3）循环    
     # 先进行一次交换
     # 计算堆的大小。初始 == 数组大小
@@ -31,17 +27,12 @@ def heapSort(arr):
         lenArr = lenArr - 1
         
         swap(arr,0,lenArr)
-
-
 '''
 将数组堆化
 思路：头部交换来的点，不断跟孩子对比，交换，找到合适的位置，或者没有孩子
-
 循环的边界是 左孩子 < 堆的大小
 '''
-   
 def heappify(arr,index,heapSize):
-    
     left = index*2 + 1
     while(left < heapSize):
         
@@ -57,8 +48,6 @@ def heappify(arr,index,heapSize):
         # 循环计算
         index = Largest
         left = index*2 + 1
-    
- 
 '''
 跟父节点对比。再递归
 '''

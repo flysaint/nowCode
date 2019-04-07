@@ -1,25 +1,19 @@
 # -*- coding: utf-8 -*-
 """
 Created on Tue Apr  2 14:25:26 2019
-
 @author: DELL
-
-
-
 ****************************
 ****主要：一天的心得。********
 ****************************
 1. 把每一层设置FLag。所谓递归就是树结构，把结构看清楚了就没问题。
 2. Python 和 Java 有些不同。牛客的案例中，java是直接对队列进行全局的操作。
 """
-
 import os
 os.chdir(r'D:/Code/github/nowCode/nowCode/BaseAlgorithm/Class02/')
 from Utils import * 
 import random
 
 import operator
-
 
 
 def mergSort(lst):
@@ -49,8 +43,6 @@ def merg(LeftList,RightList):
         helpArr.append(RightList[p2])
         p2 = p2 + 1
     return helpArr
-
-
 
 
 testArr = [1,5,3]

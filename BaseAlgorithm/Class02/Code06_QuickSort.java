@@ -14,6 +14,7 @@ public class Code06_QuickSort {
 	public static void quickSort(int[] arr, int l, int r) {
 		if (l < r) {
 			swap(arr, l + (int) (Math.random() * (r - l + 1)), r);
+			// 划分出了一个等于区域
 			int[] p = partition(arr, l, r);
 			quickSort(arr, l, p[0] - 1);
 			quickSort(arr, p[1] + 1, r);
@@ -32,7 +33,9 @@ public class Code06_QuickSort {
 				l++;
 			}
 		}
+		// 为什么要做交换？我的划分值要放到中间去
 		swap(arr, more, r);
+		// 返回等于区域的范围
 		return new int[] { less + 1, more };
 	}
 
