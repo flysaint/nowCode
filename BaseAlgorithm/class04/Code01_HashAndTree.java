@@ -92,7 +92,7 @@ public class Code01_HashAndTree {
 		nodeB = new Node(3);
 		nodeC = new Node(7);
 
-		TreeSet<Node> treeSet = new TreeSet<>();
+		TreeSet<Node> treeSet = new TreeSet<>(); // 底层是红黑树
 		// 以下的代码会报错，因为没有提供Node类型的比较器
 		try {
 			treeSet.add(nodeA);
