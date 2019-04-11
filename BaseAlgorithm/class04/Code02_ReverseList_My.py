@@ -11,6 +11,7 @@ Created on Sun Apr  7 23:18:43 2019
 2. 定义形成链表的函数。
 3. 定义链表反转的函数。
 
+https://blog.csdn.net/weixin_39561100/article/details/79818949
 """
 
 class Node:
@@ -40,6 +41,13 @@ def reveseList(pHead):
     思路：创建另一辅助list，将输入传入。再反响传出。
     
     '''
+    if pHead is None:
+        return False
+    
+    new_head = None
+    while pHead:
+        if pHead.next_node is None:
+            node = 
     
     
     

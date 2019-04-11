@@ -66,10 +66,51 @@ testArr = random.sample(range(0,100),10)
 
 num,arrSorted = mergSortLitSum(testArr)
 
+
+
+'''
+逆序对
+'''
+
+
+def mergSortCompare(lst):
+    if len(lst) == 1:
+        return [],lst
+    m = int(len(lst)/2)
+    
+    L_Compare,L_lst = mergSortCompare(lst[:m])
+    R_Compare,R_lst = mergSortCompare(lst[m:])
+    
+    M_Compare,sortedLst = mergCompare(L_lst,R_lst)
+    return (L_Compare + R_Compare + M_Compare),sortedLst
+
+def mergCompare(L_lst,R_lst):
+    helpArr = []
+    p1 = 0
+    p2 = 0
+    M_Compare = []
+    while(p1 < len(L_lst) and p2 < len(R_lst)):
+        if (L_lst[p1] <= R_lst[p2]):
+            helpArr.append(L_lst[p1])
+            p1 = p1 + 1
+        else:
+            M_Compare.append({L_lst[p1]:R_lst[p2]})
+            helpArr.append(R_lst[p2])
+            p2 = p2 + 1
+    
+    while(p1 < len(L_lst)):
+        helpArr.append(L_lst[p1])
+        p1 = p1 + 1
+    
+    while(p2 < len(R_lst)):
+        helpArr.append(R_lst[p2])
+        p2 = p2 + 1
+    
+    return   M_Compare,helpArr  
     
     
     
+testArr = [1,5,3,2,8]
+
     
-    
-    
-    
+revese_list,sortedLst = mergSortCompare(testArr)

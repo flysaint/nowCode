@@ -4,7 +4,11 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 public class Code03_LessMoneySplitGold {
-
+	/*
+	哈夫曼编码处理的问题
+	1. 和原始顺序无关。
+	2. 两个共同的编码合成一个指标。
+	*/
 	public static int lessMoney(int[] arr) {
 		PriorityQueue<Integer> pQ = new PriorityQueue<>();
 		for (int i = 0; i < arr.length; i++) {
@@ -12,7 +16,9 @@ public class Code03_LessMoneySplitGold {
 		}
 		int sum = 0;
 		int cur = 0;
+		// 只剩一个树，从样本中出来
 		while (pQ.size() > 1) {
+			// 每次两个弹出，肯定是非叶节点？
 			cur = pQ.poll() + pQ.poll();
 			sum += cur;
 			pQ.add(cur);
