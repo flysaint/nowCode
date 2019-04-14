@@ -54,10 +54,10 @@ def swap(arr,i,j):
     arr[i] = arr[j]
     arr[j] = temp
 
-testArr = [1,5,3,6,3]
+testArr = [1,5,6,3]
 testArr = random.sample(range(100),10)
 
-equalArr = partion(testArr,0,4)
+equalArr = partion(testArr,0,3)
 
 import operator
 
