@@ -10,14 +10,42 @@ Created on Thu Apr 11 09:14:03 2019
 返回这个最多的宣讲场次。
 
 """
+import functools
 
-class ProgramComparator:
+class Program:
     def __init__(self,start,end):
         self.start = start
         self.end = end
         
-    def compare(o1,o2):
-        return o1.end - o2.end
+    def __str__(self):
+        return ('(%s,%s)' % (self.start,self.end))
+    
+    __repr__ = __str__
+        
+def cmp3(o1,o2):
+    return o1.end - o2.end
+
+def bestArrange(programs,start):
+    programs.sort(key=functools.cmp_to_key(cmp3))
+    
+programs = [Program(1,2),Program(2,3),Program(1,1)]
+
+print(programs)
+programs.sort(key=functools.cmp_to_key(cmp3))
+
+print(programs)
 
 
-'a' + 'b' < 'b' + 'a'
+
+
+
+
+
+
+
+
+
+
+
+
+
