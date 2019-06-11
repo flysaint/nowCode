@@ -60,12 +60,86 @@ def get_count_Inner(testStr,i):
         if len(testStr) > i+1 and int(testStr[i+1]) <= 6:
             res += get_count_Inner(testStr,i+2)
         return res
+    
+    # testStr[i] = 3~9，则和下一位i+1相同
+    return get_count_Inner(testStr,i+1)
         
         
 testStr = '111'    
         
 
 get_count_Inner(testStr,0)
+
+
+
+'''
+DP方案
+思考。暴力尝试的方法，就是不存储结果，像二叉树一样，不停调用。复杂度是O(2^N)
+
+DP方案就是用数组存储已经计算过的过程
+'''
+
+
+
+def get_count_Inner_DP(testStr,i):
+    DP_Num = [-1]*len(testStr)
+    DP_Num[N]
+    if(len(testStr) == i):
+        return 1
+    
+    if(testStr[i] == '0'):
+        return 0
+    
+    if(testStr[i] == '1'):
+        res = get_count_Inner(testStr,i+1)
+        
+        if len(testStr) > i+1:
+            res += get_count_Inner(testStr,i+2)
+        return res
+        
+    if(testStr[i] == '2'):
+        
+        res = get_count_Inner(testStr,i+1)
+        
+        if len(testStr) > i+1 and int(testStr[i+1]) <= 6:
+            res += get_count_Inner(testStr,i+2)
+        return res
+    
+    # testStr[i] = 3~9，则和下一位i+1相同
+    return get_count_Inner(testStr,i+1)
+
+
+DP_Num = [-1]*len(testStr)
+
+# 最后一个位置 N 是 1
+DP_Num[N] = 1
+if 
+testStr[i] == '1':
+    DP_Num[i] = DP_Num[i ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
