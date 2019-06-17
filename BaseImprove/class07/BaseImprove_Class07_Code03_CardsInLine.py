@@ -40,6 +40,11 @@ s(L,R) = min(f(L+1,R),f(L,R-1))
 注意。都是从自己的角度出发，s(L+1,R)，就是当在L+1,R范围上，我又是后手怎么处理？
 
 """
+
+
+
+
+
 def win(arr):
     if arr is None or len(arr) == 0:
         return 0
