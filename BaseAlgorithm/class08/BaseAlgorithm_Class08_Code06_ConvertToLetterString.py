@@ -26,16 +26,38 @@ BaseAlgorithm_Class08_Code06_ConvertToLetterString
 4) 当前位置 == 2 。考虑切割2，和切割2和2后面1位的情况
 
 
+在位置i，的含义是，将 0~i位置当做一个整体，有多少种可能
+
 """
+import numpy as np
+
+import pandas as pd
 
 
-def get_count_out(testStr):
-    #if testStr is None or len(testStr) == 1:
-    #    return 
+
+def get_count_DP(testStr):
     
-    get_count_Inner(testStr,0)
-    
+    # 建立动态规划矩阵
+    count_list = list(np.zeros(len(testStr)+1))
 
+    # 边界条件
+    count_list[len(testStr)] = 1
+    
+    for i in range(len(testStr) - 1,-1,-1):
+        if testStr[i] == '0':
+            count_list[i] = 0
+        elif testStr[i] == '1':
+            count_list[i] = count_list[i+1]
+            if len(testStr)  > i + 1:
+                count_list[i] += count_list[i+2]
+        elif testStr[i] == '2':
+            count_list[i] = count_list[i+1]
+            if len(testStr)  > i + 1 and int(testStr[i+1]) <= 6:
+                count_list[i] += count_list[i+2]
+        else:
+            count_list[i] = count_list[i+1]
+    
+    return count_list[0]
 
 
 def get_count_Inner(testStr,i):
@@ -64,66 +86,11 @@ def get_count_Inner(testStr,i):
     # testStr[i] = 3~9，则和下一位i+1相同
     return get_count_Inner(testStr,i+1)
         
-        
-testStr = '111'    
-        
 
-get_count_Inner(testStr,0)
-
-
-
-'''
-DP方案
-思考。暴力尝试的方法，就是不存储结果，像二叉树一样，不停调用。复杂度是O(2^N)
-
-DP方案就是用数组存储已经计算过的过程
-'''
-
-
-
-def get_count_Inner_DP(testStr,i):
-    DP_Num = [-1]*len(testStr)
-    DP_Num[N]
-    if(len(testStr) == i):
-        return 1
-    
-    if(testStr[i] == '0'):
-        return 0
-    
-    if(testStr[i] == '1'):
-        res = get_count_Inner(testStr,i+1)
-        
-        if len(testStr) > i+1:
-            res += get_count_Inner(testStr,i+2)
-        return res
-        
-    if(testStr[i] == '2'):
-        
-        res = get_count_Inner(testStr,i+1)
-        
-        if len(testStr) > i+1 and int(testStr[i+1]) <= 6:
-            res += get_count_Inner(testStr,i+2)
-        return res
-    
-    # testStr[i] = 3~9，则和下一位i+1相同
-    return get_count_Inner(testStr,i+1)
-
-
-DP_Num = [-1]*len(testStr)
-
-# 最后一个位置 N 是 1
-DP_Num[N] = 1
-if 
-testStr[i] == '1':
-    DP_Num[i] = DP_Num[i ]
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    testStr = '11111'
+    print(get_count_Inner(testStr,0))
+    print(get_count_DP(testStr))
 
 
 

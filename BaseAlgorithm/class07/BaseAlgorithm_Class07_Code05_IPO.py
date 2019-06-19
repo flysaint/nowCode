@@ -21,8 +21,40 @@ m表示你初始的资金
 testexample
 
 k=2, W=0, Profits=[1,2,3], Capital=[0,1,1]
-
 """
+
+
+k=2
+W=0
+Profits=[1,2,3]
+Capital=[0,1,1]
+
+def findMaxValue(k,W,Profits,Capital):
+
+    Projects = []
+    
+    for i in range(len(Profits)):
+        
+        Projects.append([Profits[i],Capital[i]])
+    
+    sorted(Projects)
+    i = len(Projects) - 1
+    while( k > 0 and i >= 0):
+        
+        if(Projects[i][1] > W):
+            i -= 1
+        else:
+            
+            W += Projects[i][0]
+            k -= 1
+            Projects.pop(i)
+            
+            i = len(Projects) - 1
+            
+            
+
+
+
 def findMaximizedCapital( k, W, Profits, Capital):
     #将利润和资本通过zip函数，转化成1对1的列表
     num=[x for x in zip(Profits,Capital)]
