@@ -9,13 +9,18 @@ public class Code05_BobDie {
 		return String.valueOf((live / gcd) + "/" + (all / gcd));
 	}
 
+	// M*N的区域，Bob在(row,col)位置，走rest步之后，获得生存点数
+	// 即是 活着的走法。总共有几种走法，4^K。因为每次有4个方向，走k步，因此是4^k步。
+	// 动态规划怎么改？rest == 0 的时候是已知的，从rest ==0 往上推。
 	public static long process(int N, int M, int row, int col, int rest) {
 		if (row < 0 || row == N || col < 0 || col == M) {
 			return 0;
 		}
+		// row,col 没越界
 		if (rest == 0) {
 			return 1;
 		}
+		// 还没走完，row,col也没越界
 		long live = process(N, M, row - 1, col, rest - 1);
 		live += process(N, M, row + 1, col, rest - 1);
 		live += process(N, M, row, col - 1, rest - 1);

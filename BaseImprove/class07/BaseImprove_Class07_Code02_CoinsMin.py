@@ -4,6 +4,8 @@ Created on Sun Jun 16 10:54:00 2019
 
 @author: fly_s
 
+
+BaseImprove_Class07_Code02_CoinsMin
 题目二
 换钱的最少货币数
 【题目】
@@ -20,18 +22,83 @@ arr=[3,5]，aim=2。
 
 """
 
-def minCoins1(arr,aim):
+arr = [5,2,3]
+
+sorted(arr,reverse = True)
+
+# 到了i位置，使用i位置的牌，能否把rest的金额分完
+def process(arr,i,rest):
+    
+    sorted(arr,reverse = True)
+    # 边界条件
+    # 到了最后的位置，并且把钱分完了
+    if i == len(arr):
+        return 0 if rest == 0 else -1
+    
+    # 考虑是第一次的情况
+    res = -1
+    
+    # 一般情况
+    # 本位置上的牌用多少张
+    k = 0
+    while arr[i]*k <= rest:
+        # 使用 本位置k张牌
+        next_rest = process(arr,i+1,rest - k*arr[i])
+        # 是否使用本轮的方案
+        if next_rest != -1:
+            res = next_rest + k if res == -1 else min(res,next_rest+k)
+        k += 1
+    return res
+            
+        
+        
+    
+    
+    
+    
+    
+    
+    
     
 
-def process(arr,aim):
-    '''
-    将所有单个单词组成的可能，放入数组。
-    遍历数组每一个值，求出里面的最小值
-    '''
-    max_nums = []
-    for index in range(len(arr)):
-        max_nums.append(int(aim/arr[index]) + 1)
+
+
+'''
+def process(arr,i,rest):
+    # 中止条件
+    # 当用完所有的 数组数据后，还有多少钱要分
+    if i == len(arr):
+        # 钱能分为，返回0，不能返回 -1
+        return 0 if rest == 0 else -1
+    
+    # 最少张数，初始时为-1，因为还没找到有效解
+    res = -1
+    
+    # 一般情况
+    # 依次使用每个位置上的数据后
+    k = 0
+    # 仅使用当前的面值
+    while k * arr[i] <= rest :
+        # 当前位，使用k个arr[i]，共需要多少张牌
+        n_rest = process(arr,i+1,rest - k * arr[i])
+        # 需要的牌不是 -1 张，说明 本轮 方案可行
+        if n_rest != -1:
+            # 是 res == -1，说明是第一次分配吗？
+            # 不是 -1,说明已经找到了方案，看历史方案，和当前新的方案，哪种更优？
+            res = n_rest + k if res == -1 else min(res,n_rest + k)
         
+        k += 1
+    return res
+      
+
+'''
+
+
+if __name__ == '__main__':
+    arr=[5,2,3]
+    aim=20
+    
+    print(process(arr,0,aim))
     
     
     

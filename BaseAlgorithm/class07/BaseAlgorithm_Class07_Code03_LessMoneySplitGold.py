@@ -33,11 +33,25 @@ import queue
    
 pQ = queue.PriorityQueue()
 
-pQ.put(1)
 
-print(pQ.qsize() )
-pQ.get()
-print(pQ.qsize())
+def lessMoney(arr):
+    
+    pQ = queue.PriorityQueue()
+    for v in arr:
+        pQ.put(v)
+        
+    sum_num = 0
+    while(pQ.qsize() > 1):
+        num = pQ.get() + pQ.get()
+        sum_num += num
+        pQ.put(num)
+    
+    return sum_num
+        
+
+
+'''
+
 
 def lessMoney(arr):
     
@@ -46,10 +60,13 @@ def lessMoney(arr):
     for i in range(len(arr)):
         pQ.put(arr[i])
     
+    
+    sum_num = 0
+    cur_num = 0
+    
     while(pQ.qsize() > 1):
         
-        sum_num = 0
-        cur_num = 0
+        
         
         record_num = cur_num = pQ.get()
         cur_num = cur_num + pQ.get()
@@ -59,23 +76,45 @@ def lessMoney(arr):
         pQ.put(cur_num)
     
     return sum_num
+'''
 
-if __name__ == "main":
+if __name__ == "__main__":
     
-    testArr1 = [6,7,8,9]
+    testArr2 = [30,10,20]
     
-    testArr2 = [7,5,3,2,1,6,7]
+    lessNum = lessMoney(testArr2)
     
-    final_num = lessMoney(testArr2)
+    print(lessNum)
     
     
 
     
+pQ = queue.PriorityQueue()
+
+#testArr2 = [7,5,3,2,1,6,7]
+
+arr = [30,10,20]
+
+
+pQ = queue.PriorityQueue()
     
+for i in range(len(arr)):
+    pQ.put(arr[i])
+
+while(pQ.qsize() > 1):
     
+    sum_num = 0
+    cur_num = 0
     
+    cur_num = pQ.get()
+    cur_num = cur_num + pQ.get()
     
+    sum_num = sum_num + cur_num
+    print("num1 = {},num2 = {},sum_num = {}".format(record_num,cur_num,sum_num))
+    pQ.put(cur_num)
     
+
+type(pQ)
     
     
     

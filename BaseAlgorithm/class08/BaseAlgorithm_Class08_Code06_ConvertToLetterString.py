@@ -26,12 +26,106 @@ BaseAlgorithm_Class08_Code06_ConvertToLetterString
 4) 当前位置 == 2 。考虑切割2，和切割2和2后面1位的情况
 
 
-在位置i，的含义是，将 0~i位置当做一个整体，有多少种可能
+在位置i，的含义是，将 0~i位置当做一个整体，再加上后面的可能，共有多少种可能
 
+
+终止位置理解.
+前面的我不管，从i出发，有多少种可能。
+i之前的位置，如何转化已经做过决定了，不用关心。
+终止位置，
+两种理解。
+1）来到最后位置，不管前面，但前面已经做了决定，这个决定就是一种可能。
+2）来到最后位置，只有空字符串了，空字符串也是1种可能。
+疑问：前面的一定可以做转换吗？可以
 """
 import numpy as np
 
 import pandas as pd
+
+def process(arr,i):
+    
+    
+    # 中止条件
+    # 达到最后
+    if i == len(arr):
+        return 1
+    
+    if arr[i] == 0:
+        return 0
+    
+    if arr[i] == '1':
+        count = process(arr,i+1)
+        if i + 1 < len(arr):
+            count += process(arr,i+2)
+        return count 
+       
+    if arr[i] == '2':
+        count = process(arr,i+1)
+        if i + 1 < len(arr) and 0<= arr[i+1] <= 6:
+            count += process(arr,i+2)
+        return count
+    
+    return process(arr,i+1)
+    
+def get_count_dp(arr):
+    
+    count_list = np.zeros(len(arr)+1)
+    # 终止位置
+    count_list[len(arr)] = 1
+    
+    for i in range(len(arr)-1,-1,-1):
+        if arr[i] == '1':
+            count_list[i] = count_list[i+1]
+            if i + 1 < len(arr):
+                count_list[i] += count_list[i+2]
+                
+        elif arr[i] == '2':
+            count_list[i] = count_list[i+1]
+            if i + 1 < len(arr) and 0 <= arr[i+1] <= 6:
+                count_list[i] += count_list[i+2]
+        else:
+            count_list[i] = count_list[i+1]
+    return count_list[0]
+        
+            
+    
+    
+    
+    
+    
+    
+    
+
+if __name__ == '__main__':
+    testStr = '111'
+    
+    #count_list = np.zeros(len(testStr))
+    #print(process(testStr,0))
+    print(get_count_dp(testStr))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
