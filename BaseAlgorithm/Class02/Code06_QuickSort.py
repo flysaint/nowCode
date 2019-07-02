@@ -28,97 +28,107 @@ def quickSort_process(arr,l,r):
         quickSort_process(arr,p[1] + 1,r)
 
 
-def partion(arr,l,r):
-    # 小于区域为空
+def partition(arr,l,r):
+    '''
+    我的问题：
+    1. 需要几个指针？起点怎么设置？
+    使用 l 做指针，因为less区域后面还有等于区域
+    使用 more 做指针，因为  r 不能动，因为一直要做对比
+    
+    起点怎么设置？
+    
+    less 设置 l - 1，因为 l 位置还没有 划到 less 区域里面
+    more 设置 r ，因为 r 位置也没有划到 more 区域里面
+    
+    2. 怎么进行循环对比？谁跟谁比？ 比完后怎么交换？为什么这么交换？
+    一句话总结。
+    肯定是 指针位置 l 和 r 做对比。
+    大于。交换l和 more -1 (大于区域的前一位)，这样大于区域可以向左一位。但保持l不变，因为交换的值还要做对比。
+    等于。l直接后移动一位。因为起始值，l就在more的后一位。能保证等于区域在小于区域后面。
+    小于。l与 less + 1(小于区域后一位)交换，less + 1,l + 1。等于 把当前值交换到 小于区域下一位，同时扩大小于区域。指针后移。
+    
+    
+    总结：Partition的故事。对人进行排序。
+    1. 故事的背景。来了一些人。我们只认识两个，名字分别叫 ，最左边的叫 阿左，右边的叫阿右。
+    2. 故事的目标。要按照 小右的身高，将这些人分开。分成 小，等，大三个组。
+    3. 故事的帮手。为了分组，于是请了两个人帮忙。一个叫 阿小，一个阿大。分别用来记录 小组和大组的 边界。
+    4. 故事的开始。阿左站在最左边，阿小站在阿左的左边。因为目前小组没人， 阿右站在最右边，阿大和阿右站在一起。因为目前大组没人，而阿右是裁判，不算大组的人
+    5. 故事的停止条件。什么时候，所有人对比完成，当阿左碰上阿大。因为阿小在阿左的左边，阿右不能动。
+    6. 故事的叙述。阿右是裁判，阿左每次做对比，大于，要换，more动，我不动。等于，不换，我要动起来。小于 要换，less动，我也动。
+    7. 故事的结尾。返回阿小和阿右。
+    '''
+                                                        
     less = l - 1
-    # 大于区域为空
     more = r
     while(l < more):
-        if arr[l] == arr[r]:
-            l = l + 1
+        if arr[l] > arr[r]:
+            # 要把 大值 交换到 大于区域
+            swap(arr,l,more-1)
+            # 大值指针，要移动一位
+            more -= 1
+        elif arr[l] == arr[r]:
+            #swap(arr,l,less+1)
+            l += 1
         elif arr[l] < arr[r]:
-            # 为什么要交换？ 因为小于区域右一位，可能是等于值
-            swap(arr,less+1,l)
-            less = less + 1
-            l = l + 1
-        else:
-            swap(arr,more-1,l)
-            more = more - 1
-    # 交换划分值到中间位置
-    swap(arr,more,r)
-    # 返回相等区域的值
-    return less + 1,more
+            # less 要么等于 l -1。要么等于 l - i，所以一定是对比过的值。
+            # less + 1 要么就是 l 自己，自己和自己交换，没有任何风险。
+            # less + 1，要么是 等于区域的值，因为 l 经过的地方，都是等于区域。交换后，等于区域会继续保持在小于区域的后面
+            swap(arr,l,less+1)
+            l += 1
+            less += 1
+    swap(arr,l,r)
+    return less,more
+            
+    
+'''
+partion过程怎么和快速排序结合
+
+我的工具，每次回让partition等于区域两边的区域,小于区域，相对大于区域是有序的。
+那就和归并排序类似。只要不断递归就可以。
+每次随机从 l,r之间选择一个位置，进行交换。中止条件，肯定是相等相关的.
+
+中止条件，左边界 碰到 右边界。
+Patition返回小于区域和大于区域的边界。两边再分别排序。
+
+'''
 
 
-def partion(arr,l,r):
-    '''
-    将数组的左右两边都变的有序
-    假设已经是有序的了，再对左右两边递归继续partion
-    所以我要分几部分进行操作？
+def QuickSort(arr,l,r):
     
-    肯定需要随机，在左边，右边，进行Partion
-    
-    我的问题：
-    1. 怎么实现小中大三个区域？ 需要几个额外的指针？
-    我用两个指针分别代表大小区域可以吗？ 用两个数替代，但他们代表的不是指针，而是小于区域右边界，和大于区域的左边界。
-    注意小于区域，只有右边界。且是包含关系。大于区域，只有左边界，且是包含关系。
-    但是将 输入参数 l，当做左指针。将大于区域的左边界，当做右指针。
-    
-    小区域的指针是怎么移动？怎么交换的？我现在感觉小于区域和等于区域都不用交换。
-    相等的时候，确实不用交换。直接移动指针。
-    小于的时候，要进行交换，
-    大于区域的指针是怎么赋值的？我感觉应该设置到右边界 - 1的位置，这样就等于和 右边界前一位进行对比和交换。
-    
-    '''
-    if l >= r:
+    if(l >= r):
         return 
-    # 需要两个指针
-    P1 = l - 1
-    P2 = r - 1
-    while(P1 < P2):
-        # 小于区域
-        if arr[P1] < arr[r]:
-            P1 += 1
-        # 等于区域
-        elif arr[P1] == arr[r]:
-            P1 += 1
-        # 大于区域
-        else:
-            swap(arr,P1,r)
+    
+    m = l + random.sample(range(0,r-l+1),1)[0]
+    # 将这个数 交换到 末尾
+    swap(arr,m,r)
+    q,p = partition(arr,l,r)
+    QuickSort(arr,l,q)
+    QuickSort(arr,p,r)
 
-
-
-
-
-
-
-
-
-
-
-
+        
 
 def swap(arr,i,j):
     temp = arr[i]
     arr[i] = arr[j]
     arr[j] = temp
 
-testArr = [1,5,6,3]
-testArr = random.sample(range(100),10)
 
-equalArr = partion(testArr,0,3)
-
+import random
 import operator
+import copy
 
-testArr1 = random.sample(range(0,100),50)
-testArr2 = testArr1.copy()
+testArr1 = random.sample(range(100),10)
+testArr2 = copy.copy(testArr1)
 
 for i in range(0,100):
-    quickSort(testArr1)
+    QuickSort(testArr1,0,len(testArr1)-1)
     if not (operator.eq(testArr1,sorted(testArr2))):
         print('bad')
         print(testArr1)
         break
+    
+    
+    
 
 
 
